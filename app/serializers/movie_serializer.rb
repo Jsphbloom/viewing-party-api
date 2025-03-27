@@ -1,6 +1,6 @@
 class MovieSerializer
   include JSONAPI::Serializer
-  attributes :adult, :backdrop_path, :genre_ids, :id, :original_language, :original_title, :overview, :popularity, :poster_path, :release_date, :title, :video, :vote_average, :vote_count
+  attributes :id, :title, :vote_average
 
   def self.format_movie_list(movies)
     { data:
