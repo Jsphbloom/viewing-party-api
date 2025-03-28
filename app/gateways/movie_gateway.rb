@@ -1,7 +1,7 @@
 class MovieGateway
 
-  def self.popular_movies
-    response = conn.get("/3/movie/popular")
+  def self.top_rated_movies
+    response = conn.get("/3/movie/top_rated")
     JSON.parse(response.body, symbolize_names: true)[:results]
   end
 
