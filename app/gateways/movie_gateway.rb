@@ -7,9 +7,9 @@ class MovieGateway
     JSON.parse(response.body, symbolize_names: true)[:results]
   end
 
-  def self.movie_search(params)
-    response = conn.get("/3/discover/movie") do |request|
-      params.each { |key, value| request.params[key] = value }
+  def self.movie_search(query)
+    response = conn.get("/3/search/movie") do |request|
+      request.params["query"] = query
       request.params["page"] = 1
     end
     JSON.parse(response.body, symbolize_names: true)[:results]
