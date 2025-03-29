@@ -9,10 +9,10 @@ class MovieGateway
 
   def self.movie_search(query)
     response = conn.get("/3/search/movie") do |request|
-      request.params["query"] = query
+      request.params["query"] = query.to_s.strip
       request.params["page"] = 1
     end
-    JSON.parse(response.body, symbolize_names: true)[:results]
+    JSON.parse(response.body, symbolize_names: true)[:results] || []
   end
 
   private
