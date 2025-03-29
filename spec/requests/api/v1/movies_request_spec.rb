@@ -44,7 +44,7 @@ RSpec.describe "Movies API", :request do
           }).
         to_return(status: 200, body: json_response, headers: {})
 
-        get "/api/v1/movies/search?query=TRON: Legacy", as: :json
+        get "/api/v1/movies?query=TRON: Legacy", as: :json
 
         expect(response).to have_http_status(:ok)
 
