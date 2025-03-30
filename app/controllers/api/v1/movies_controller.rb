@@ -6,7 +6,11 @@ class Api::V1::MoviesController < ApplicationController
     else
       movies = MovieGateway.top_rated_movies
     end
-  
     render json: MovieSerializer.format_movie_list(movies)
+  end
+
+  def show
+    movie = MovieGateway.movie_details(params[:movie_id])
+    render json: MovieSerializer.format_single_movie(movie)
   end
 end
