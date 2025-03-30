@@ -5,7 +5,6 @@ class Api::V1::ViewingPartiesController < ApplicationController
 
     if party.save
       create_invitees(party, params[:invitees])
-      # binding.pry
       render json: ViewingPartySerializer.new(party)
     else
       render json: { errors: party.errors.full_messages }, status: :unprocessable_entity
