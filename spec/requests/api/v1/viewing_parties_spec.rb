@@ -58,9 +58,36 @@ RSpec.describe "ViewingParties", type: :request do
         invitees: party.invitees.map(&:id)
       }
 
-
       post "/api/v1/viewing_parties", headers: headers, params: JSON.generate(params)
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "returns an error if end time is before start time" do
+      @host = create(:user, id: 3)
+      @user1 = create(:user, id: 5)
+      @user2 = create(:user, id: 11)
+      @user3 = create(:user, id: 7)
+
+      party = create(:viewing_party, start_time: "2025-02-01 10:00:00", end_time: "2025-02-01 9:30:00", invitees: [@user1, @user2, @user3])
+
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      params = {
+        start_time: party.start_time,
+        end_time: party.end_time,
+        movie_id: party.movie_id,
+        movie_title: party.movie_title,
+        host_id: party.host.id,
+        invitees: party.invitees.map(&:id)
+      }
+
+      post "/api/v1/viewing_parties", headers: headers, params: JSON.generate(params)
+
+      expect(response).to have_http_status(400)
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json[:message]).to eq("End time must be after start time")
     end
   end
 end

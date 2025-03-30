@@ -3,6 +3,13 @@ class Api::V1::ViewingPartiesController < ApplicationController
     party = ViewingParty.new(viewing_party_params)
     party.host_id = params[:host_id]
 
+    start_time = DateTime.parse(params[:start_time])
+    end_time = DateTime.parse(params[:end_time])
+
+    if end_time <= start_time
+      return render json: { message: "End time must be after start time", status: 400 }, status: :bad_request
+    end
+
     if party.save
       create_invitees(party, params[:invitees])
       render json: ViewingPartySerializer.new(party)
