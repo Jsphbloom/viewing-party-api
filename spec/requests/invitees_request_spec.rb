@@ -7,8 +7,8 @@ RSpec.describe "invitees_controller", :request do
       @user1 = create(:user, id: 5)
       @user2 = create(:user, id: 11)
       @user3 = create(:user, id: 7)
-      @addeduser = create(:user, id: 15)
-      party = create(:viewing_party, id: 1, invitees: [@user1, @user2, @user3])
+      create(:user, id: 15)
+      create(:viewing_party, id: 1, invitees: [@user1, @user2, @user3])
 
       headers = {"CONTENT_TYPE" => "application/json"}
 
