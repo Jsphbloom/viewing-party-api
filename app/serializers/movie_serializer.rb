@@ -19,7 +19,7 @@ class MovieSerializer
 
   def self.format_single_movie(movie)
     return { error: movie[:error] } if movie[:error]
-    { 
+    {
       data:
           {
             id: movie[:details][:id],
@@ -32,14 +32,14 @@ class MovieSerializer
               genres: movie[:details][:genres],
               summary: movie[:details][:overview],
               cast: movie[:credits][:cast].first(10).map do |actor|
-                { 
+                {
                   character: actor[:character],
                   actor: actor[:name]
                 }
               end,
               total_reviews: movie[:reviews][:total_results],
               reviews: movie[:reviews][:results].first(5).map do |review|
-                { 
+                {
                   author: review[:author],
                   review: review[:content]
                 }
