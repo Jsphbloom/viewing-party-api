@@ -10,7 +10,7 @@ class Api::V1::MoviesController < ApplicationController
   end
 
   def show
-    movie = MovieGateway.movie_details(params[:movie_id])
+    movie = MovieGateway.movie_details(params[:id])
     render json: MovieSerializer.format_single_movie(movie)
   end
 end
