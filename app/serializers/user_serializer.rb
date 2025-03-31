@@ -41,7 +41,7 @@ class UserSerializer
           start_time: party.start_time.strftime('%Y-%m-%d %H:%M:%S'),
           end_time: party.end_time.strftime('%Y-%m-%d %H:%M:%S'),
           movie_id: party.movie_id,
-          movie_title: party.movie.title,
+          movie_title: party.movie_title,
           host_id: party.host_id
           }
         end
