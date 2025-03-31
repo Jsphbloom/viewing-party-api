@@ -108,4 +108,16 @@ RSpec.describe "Users API", type: :request do
       expect(json[:attributes][:viewing_parties_invited].count).to eq(1)
     end
   end
+
+  describe "sad paths" do
+    it "errors out if user ID doesn't exist" do
+      tom = User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
+
+      get "/api/v1/users/5"
+
+      expect(response).not_to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(json[:message]).to eq("Invalid User ID")
+    end
+  end
 end
