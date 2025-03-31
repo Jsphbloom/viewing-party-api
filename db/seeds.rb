@@ -12,4 +12,3 @@ User.create!(id: 5, name: "Danny DeVito", username: "danny_de_v", password: "jer
 User.create!(id: 7, name: "Dolly Parton", username: "dollyP", password: "Jolene123")
 User.create!(id: 11, name: "Lionel Messi", username: "futbol_geek", password: "test123")
 User.create!(id: 15, name: "Lord Farquaad", username: "coolguy", password: "frank2")
-[]
