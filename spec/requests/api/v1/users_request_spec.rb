@@ -87,4 +87,37 @@ RSpec.describe "Users API", type: :request do
       expect(json[:data][0][:attributes]).to_not have_key(:api_key)
     end
   end
+
+  describe "Show user profile" do
+    it "can retrieve information about a user's profile" do
+      tom = User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
+      oprah = User.create!(id: 2, name: "Oprah", username: "oprah", password: "abcqwerty")
+      User.create!(id: 3, name: "Beyonce", username: "sasha_fierce", password: "blueivy")
+
+      create(:viewing_party, id: 500, invitees: [tom, oprah])
+
+      get "/api/v1/users/1"
+
+      expect(response).to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json.count).to eq(3)
+      expect(json[:id]).to eq("1")
+      expect(json[:type]).to eq("user")
+      expect(json[:attributes][:name]).to eq("Tom")
+      expect(json[:attributes][:viewing_parties_invited].count).to eq(1)
+    end
+  end
+
+  describe "sad paths" do
+    it "errors out if user ID doesn't exist" do
+      User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
+
+      get "/api/v1/users/5"
+
+      expect(response).not_to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(json[:message]).to eq("Invalid User ID")
+    end
+  end
 end

@@ -22,7 +22,6 @@ RSpec.describe "ViewingParties", type: :request do
         invitees: party.invitees.map(&:id)
       }
 
-
       post "/api/v1/viewing_parties", headers: headers, params: JSON.generate(params)
       expect(response).to have_http_status(:ok)
 
