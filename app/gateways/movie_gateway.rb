@@ -15,11 +15,23 @@ class MovieGateway
     JSON.parse(response.body, symbolize_names: true)[:results] || []
   end
 
+  def self.movie_details(id)
+    response_details = JSON.parse(conn.get("/3/movie/#{id}").body, symbolize_names: true)
+    response_credits = JSON.parse(conn.get("/3/movie/#{id}/credits").body, symbolize_names: true)
+    response_reviews = JSON.parse(conn.get("/3/movie/#{id}/reviews").body, symbolize_names: true)
+
+    if response_details[:success] == false
+      return { error: response_details[:status_message] }
+    end
+    
+    { details: response_details, credits: response_credits, reviews: response_reviews }
+  end
+
   private
 
   def self.conn
     Faraday.new(url: "https://api.themoviedb.org") do |f|
-      f.headers['Authorization'] = "Bearer #{Rails.application.credentials.tmdb[:key]}"
+      f.headers['Authorization'] = "Bearer #{Rails.application.credentials.tmdb[:access_token]}"
       f.headers['Content-Type'] = 'application/json'
     end
   end
