@@ -18,7 +18,8 @@ class MovieSerializer
   end
 
   def self.format_single_movie(movie)
-    binding.pry
+    # binding.pry
+    return { error: movie[:error] } if movie[:error]
     { data:
           {
             id: movie[:details][:id],
