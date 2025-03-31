@@ -92,9 +92,9 @@ RSpec.describe "Users API", type: :request do
     it "can retrieve information about a user's profile" do
       tom = User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
       oprah = User.create!(id: 2, name: "Oprah", username: "oprah", password: "abcqwerty")
-      beyonce = User.create!(id: 3, name: "Beyonce", username: "sasha_fierce", password: "blueivy")
+      User.create!(id: 3, name: "Beyonce", username: "sasha_fierce", password: "blueivy")
 
-      party = create(:viewing_party, id: 500, invitees: [tom, oprah])
+      create(:viewing_party, id: 500, invitees: [tom, oprah])
 
       get "/api/v1/users/1"
 
@@ -111,7 +111,7 @@ RSpec.describe "Users API", type: :request do
 
   describe "sad paths" do
     it "errors out if user ID doesn't exist" do
-      tom = User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
+      User.create!(id: 1, name: "Tom", username: "myspace_creator", password: "test123")
 
       get "/api/v1/users/5"
 
